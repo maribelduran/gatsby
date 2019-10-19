@@ -1,6 +1,6 @@
 ---
 title: Gatsby's first beta release
-date: "2017-06-15"
+date: 2017-06-15
 author: "Kyle Mathews"
 image: "images/13382568193_31cfce63be_o-edited.jpg"
 imageAuthor: Kees Torn
@@ -17,7 +17,7 @@ Ten months and one day ago
 followed a month later by posting
 [an issue kickstarting the rewrite of Gatsby for a 1.0 release](https://github.com/gatsbyjs/gatsby/issues/419)
 
-Since then 40 contributors have pushed 723 commits contributing to 23 alpha
+Since then, 40 contributors have pushed 723 commits contributing to 23 alpha
 releases before today's first beta release. It's been a really enjoyable
 experience watching Gatsby v1 take form and helping shape that and the growing
 community around it.
@@ -66,7 +66,7 @@ individuals and companies.
 - [X-Team](https://x-team.com/)
 - [Contentful](https://www.contentful.com/)
 
-### Our open source hosting/testing infastructure providers
+### Our open source hosting/testing infrastructure providers
 
 It'd be impossible to write open source code without the generous support of
 these infrastructure providers.

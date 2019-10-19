@@ -1,80 +1,58 @@
-import React from "react"
-import PropTypes from "prop-types"
-import styled from "react-emotion"
+/** @jsx jsx */
+import { jsx } from "theme-ui"
+import styled from "@emotion/styled"
+import { OutboundLink } from "gatsby-plugin-google-analytics"
 
-import presets, { colors } from "../utils/presets"
-import { rhythm, scale, options } from "../utils/typography"
-
-const horizontalPadding = rhythm(1 / 2)
-const backgroundColor = props =>
-  props.background ? props.background : colors.gatsby
-
-const BannerContainer = styled("div")`
-  background-color: ${props => backgroundColor(props)};
-  height: ${presets.bannerHeight};
-  position: fixed;
-  width: 100%;
-  z-index: 3;
-`
-
-const InnerContainer = styled("div")`
+const InnerContainer = styled(`div`)`
   align-items: center;
   display: flex;
-  height: ${presets.bannerHeight};
+  height: ${p => p.theme.sizes.bannerHeight};
   overflow-x: auto;
-  mask-image: ${`linear-gradient(to right, transparent, ${props =>
-    backgroundColor(props)} ${horizontalPadding}, ${props =>
-    backgroundColor(props)} 96%, transparent)`};
+  mask-image: ${props =>
+    `linear-gradient(to right, transparent, ${props.theme.colors.purple[90]} ${
+      props.theme.space[6]
+    }, ${props.theme.colors.purple[90]} 96%, transparent)`};
 `
 
-const Content = styled("div")`
-  color: ${colors.ui.bright};
-  font-family: ${options.headerFontFamily.join(`,`)};
-  font-size: ${scale(-1 / 5).fontSize};
-  padding-left: ${horizontalPadding};
-  padding-right: ${horizontalPadding};
-  -webkit-font-smoothing: antialiased;
+const Content = styled(`div`)`
+  color: ${p => p.theme.colors.whiteFade[80]};
+  font-family: ${p => p.theme.fonts.heading};
+  padding-left: ${p => p.theme.space[6]};
+  padding-right: ${p => p.theme.space[6]};
   white-space: nowrap;
-`
 
-const Link = styled("a")`
-  color: #fff;
-  span {
-    display: none;
-    ${presets.Mobile} {
-      display: inline;
-    }
+  a {
+    color: ${p => p.theme.colors.white};
+    border-bottom: 1px solid ${p => p.theme.colors.white};
+  }
+
+  a:hover {
+    color: ${p => p.theme.colors.white};
+    border-bottom-color: ${p => p.theme.colors.white}a0;
   }
 `
 
-const Banner = ({ children, background }) => {
-  return (
-    <BannerContainer background={background} className="banner">
-      <InnerContainer>
-        {children ? (
-          <Content>{children}</Content>
-        ) : (
-          <Content>
-            These are the docs for v2.
-            {` `}
-            <Link href="https://v1.gatsbyjs.org/">
-              View the v1 docs
-              <span>
-                {` `}
-                instead
-              </span>
-            </Link>
-            .
-          </Content>
-        )}
-      </InnerContainer>
-    </BannerContainer>
-  )
-}
-
-Banner.propTypes = {
-  children: PropTypes.node,
-  background: PropTypes.any,
-}
+const Banner = () => (
+  <aside
+    className="banner"
+    sx={{
+      backgroundColor: `banner`,
+      height: `bannerHeight`,
+      position: `fixed`,
+      width: `100%`,
+      zIndex: `banner`,
+      px: `env(safe-area-inset-left)`,
+    }}
+  >
+    <InnerContainer>
+      <Content>
+        {`Using Gatsby for your clients or team? Start 14-day free trial of `}
+        <OutboundLink href="https://www.gatsbyjs.com/preview">
+          Gatsby Preview
+        </OutboundLink>
+      </Content>
+    </InnerContainer>
+  </aside>
+)
 
 export default Banner

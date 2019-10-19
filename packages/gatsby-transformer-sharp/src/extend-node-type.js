@@ -15,17 +15,20 @@ const {
   traceSVG,
 } = require(`gatsby-plugin-sharp`)
 
-const sharp = require(`sharp`)
+const sharp = require(`./safe-sharp`)
 const fs = require(`fs`)
 const fsExtra = require(`fs-extra`)
 const imageSize = require(`probe-image-size`)
 const path = require(`path`)
+
+const DEFAULT_PNG_COMPRESSION_SPEED = 4
 
 const {
   ImageFormatType,
   ImageCropFocusType,
   DuotoneGradientType,
   PotraceType,
+  ImageFitType,
 } = require(`./types`)
 
 function toArray(buf) {
@@ -38,11 +41,13 @@ function toArray(buf) {
   return arr
 }
 
-const getTracedSVG = async ({ file, image, fieldArgs }) =>
+const getTracedSVG = async ({ file, image, fieldArgs, cache, reporter }) =>
   traceSVG({
     file,
     args: { ...fieldArgs.traceSVG },
     fileArgs: fieldArgs,
+    cache,
+    reporter,
   })
 
 const fixedNodeType = ({
@@ -51,6 +56,7 @@ const fixedNodeType = ({
   getNodeAndSavePathDependency,
   reporter,
   name,
+  cache,
 }) => {
   return {
     type: new GraphQLObjectType({
@@ -59,7 +65,12 @@ const fixedNodeType = ({
         base64: { type: GraphQLString },
         tracedSVG: {
           type: GraphQLString,
-          resolve: parent => getTracedSVG(parent),
+          resolve: parent =>
+            getTracedSVG({
+              ...parent,
+              cache,
+              reporter,
+            }),
         },
         aspectRatio: { type: GraphQLFloat },
         width: { type: GraphQLFloat },
@@ -71,7 +82,7 @@ const fixedNodeType = ({
           resolve: ({ file, image, fieldArgs }) => {
             // If the file is already in webp format or should explicitly
             // be converted to webp, we do not create additional webp files
-            if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
+            if (file.extension === `webp` || fieldArgs.toFormat === `webp`) {
               return null
             }
             const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
@@ -80,6 +91,7 @@ const fixedNodeType = ({
                 file,
                 args,
                 reporter,
+                cache,
               })
             ).then(({ src }) => src)
           },
@@ -87,7 +99,7 @@ const fixedNodeType = ({
         srcSetWebp: {
           type: GraphQLString,
           resolve: ({ file, image, fieldArgs }) => {
-            if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
+            if (file.extension === `webp` || fieldArgs.toFormat === `webp`) {
               return null
             }
             const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
@@ -96,6 +108,7 @@ const fixedNodeType = ({
                 file,
                 args,
                 reporter,
+                cache,
               })
             ).then(({ srcSet }) => srcSet)
           },
@@ -110,9 +123,16 @@ const fixedNodeType = ({
       height: {
         type: GraphQLInt,
       },
+      base64Width: {
+        type: GraphQLInt,
+      },
       jpegProgressive: {
         type: GraphQLBoolean,
         defaultValue: true,
+      },
+      pngCompressionSpeed: {
+        type: GraphQLInt,
+        defaultValue: DEFAULT_PNG_COMPRESSION_SPEED,
       },
       grayscale: {
         type: GraphQLBoolean,
@@ -128,9 +148,12 @@ const fixedNodeType = ({
       },
       quality: {
         type: GraphQLInt,
-        defaultValue: 50,
       },
       toFormat: {
+        type: ImageFormatType,
+        defaultValue: ``,
+      },
+      toFormatBase64: {
         type: ImageFormatType,
         defaultValue: ``,
       },
@@ -138,9 +161,21 @@ const fixedNodeType = ({
         type: ImageCropFocusType,
         defaultValue: sharp.strategy.attention,
       },
+      fit: {
+        type: ImageFitType,
+        defaultValue: sharp.fit.cover,
+      },
+      background: {
+        type: GraphQLString,
+        defaultValue: `rgba(0,0,0,1)`,
+      },
       rotate: {
         type: GraphQLInt,
         defaultValue: 0,
+      },
+      trim: {
+        type: GraphQLFloat,
+        defaultValue: false,
       },
     },
     resolve: (image, fieldArgs, context) => {
@@ -151,6 +186,7 @@ const fixedNodeType = ({
           file,
           args,
           reporter,
+          cache,
         })
       ).then(o =>
         Object.assign({}, o, {
@@ -169,6 +205,7 @@ const fluidNodeType = ({
   getNodeAndSavePathDependency,
   reporter,
   name,
+  cache,
 }) => {
   return {
     type: new GraphQLObjectType({
@@ -177,7 +214,12 @@ const fluidNodeType = ({
         base64: { type: GraphQLString },
         tracedSVG: {
           type: GraphQLString,
-          resolve: parent => getTracedSVG(parent),
+          resolve: parent =>
+            getTracedSVG({
+              ...parent,
+              cache,
+              reporter,
+            }),
         },
         aspectRatio: { type: GraphQLFloat },
         src: { type: GraphQLString },
@@ -194,6 +236,7 @@ const fluidNodeType = ({
                 file,
                 args,
                 reporter,
+                cache,
               })
             ).then(({ src }) => src)
           },
@@ -210,6 +253,7 @@ const fluidNodeType = ({
                 file,
                 args,
                 reporter,
+                cache,
               })
             ).then(({ srcSet }) => srcSet)
           },
@@ -228,6 +272,9 @@ const fluidNodeType = ({
       maxHeight: {
         type: GraphQLInt,
       },
+      base64Width: {
+        type: GraphQLInt,
+      },
       grayscale: {
         type: GraphQLBoolean,
         defaultValue: false,
@@ -235,6 +282,10 @@ const fluidNodeType = ({
       jpegProgressive: {
         type: GraphQLBoolean,
         defaultValue: true,
+      },
+      pngCompressionSpeed: {
+        type: GraphQLInt,
+        defaultValue: DEFAULT_PNG_COMPRESSION_SPEED,
       },
       duotone: {
         type: DuotoneGradientType,
@@ -246,9 +297,12 @@ const fluidNodeType = ({
       },
       quality: {
         type: GraphQLInt,
-        defaultValue: 50,
       },
       toFormat: {
+        type: ImageFormatType,
+        defaultValue: ``,
+      },
+      toFormatBase64: {
         type: ImageFormatType,
         defaultValue: ``,
       },
@@ -256,9 +310,21 @@ const fluidNodeType = ({
         type: ImageCropFocusType,
         defaultValue: sharp.strategy.attention,
       },
+      fit: {
+        type: ImageFitType,
+        defaultValue: sharp.fit.cover,
+      },
+      background: {
+        type: GraphQLString,
+        defaultValue: `rgba(0,0,0,1)`,
+      },
       rotate: {
         type: GraphQLInt,
         defaultValue: 0,
+      },
+      trim: {
+        type: GraphQLFloat,
+        defaultValue: false,
       },
       sizes: {
         type: GraphQLString,
@@ -278,6 +344,7 @@ const fluidNodeType = ({
           file,
           args,
           reporter,
+          cache,
         })
       ).then(o =>
         Object.assign({}, o, {
@@ -295,6 +362,7 @@ module.exports = ({
   pathPrefix,
   getNodeAndSavePathDependency,
   reporter,
+  cache,
 }) => {
   if (type.name !== `ImageSharp`) {
     return {}
@@ -305,6 +373,7 @@ module.exports = ({
     pathPrefix,
     getNodeAndSavePathDependency,
     reporter,
+    cache,
   }
 
   // TODO: Remove resolutionsNode and sizesNode for Gatsby v3
@@ -339,9 +408,7 @@ module.exports = ({
         const dimensions = imageSize.sync(
           toArray(fs.readFileSync(details.absolutePath))
         )
-        const imageName = `${details.name}-${image.internal.contentDigest}${
-          details.ext
-        }`
+        const imageName = `${details.name}-${image.internal.contentDigest}${details.ext}`
         const publicPath = path.join(
           process.cwd(),
           `public`,
@@ -353,9 +420,7 @@ module.exports = ({
           fsExtra.copy(details.absolutePath, publicPath, err => {
             if (err) {
               console.error(
-                `error copying file from ${
-                  details.absolutePath
-                } to ${publicPath}`,
+                `error copying file from ${details.absolutePath} to ${publicPath}`,
                 err
               )
             }
@@ -376,7 +441,12 @@ module.exports = ({
           src: { type: GraphQLString },
           tracedSVG: {
             type: GraphQLString,
-            resolve: parent => getTracedSVG(parent),
+            resolve: parent =>
+              getTracedSVG({
+                ...parent,
+                cache,
+                reporter,
+              }),
           },
           width: { type: GraphQLInt },
           height: { type: GraphQLInt },
@@ -393,7 +463,6 @@ module.exports = ({
         },
         quality: {
           type: GraphQLInt,
-          defaultValue: 50,
         },
         jpegProgressive: {
           type: GraphQLBoolean,
@@ -402,6 +471,10 @@ module.exports = ({
         pngCompressionLevel: {
           type: GraphQLInt,
           defaultValue: 9,
+        },
+        pngCompressionSpeed: {
+          type: GraphQLInt,
+          defaultValue: DEFAULT_PNG_COMPRESSION_SPEED,
         },
         grayscale: {
           type: GraphQLBoolean,
@@ -427,8 +500,20 @@ module.exports = ({
           type: ImageCropFocusType,
           defaultValue: sharp.strategy.attention,
         },
+        fit: {
+          type: ImageFitType,
+          defaultValue: sharp.fit.cover,
+        },
+        background: {
+          type: GraphQLString,
+          defaultValue: `rgba(0,0,0,1)`,
+        },
         rotate: {
           type: GraphQLInt,
+          defaultValue: 0,
+        },
+        trim: {
+          type: GraphQLFloat,
           defaultValue: 0,
         },
       },
@@ -440,6 +525,7 @@ module.exports = ({
             resolve(
               base64({
                 file,
+                cache,
               })
             )
           } else {

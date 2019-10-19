@@ -62,13 +62,8 @@
                 "format-packages": "prettier-eslint --write \"packages/*/src/**/*.js\"",
                 "format-cache-dir": "prettier-eslint --write \"packages/gatsby/cache-dir/*.js\""
               },
-              "workspaces": [
-                "packages/*"
-              ],
-              "eslintIgnore": [
-                "interfaces",
-                "**/__tests__/fixtures/"
-              ],
+              "workspaces": ["packages/*"],
+              "eslintIgnore": ["interfaces", "**/__tests__/fixtures/"],
               "devDependencies": {
                 "glob": "^7.1.1",
                 "jest": "^20.0.4",
@@ -100,7 +95,6 @@
                 "eslint-plugin-flowtype": "^2.35.0",
                 "eslint-plugin-jsx-a11y": "^6.0.2",
                 "eslint-plugin-prettier": "^2.2.0",
-                "eslint-plugin-flow-vars": "^0.5.0",
                 "babel-plugin-transform-runtime": "^6.23.0",
                 "babel-plugin-add-module-exports": "^0.2.1",
                 "babel-plugin-transform-flow-strip-types": "^6.22.0",
@@ -244,13 +238,7 @@
             ]
           },
           "tags": {
-            "en-US": [
-              "wood",
-              "toy",
-              "car",
-              "sweden",
-              "design"
-            ]
+            "en-US": ["wood", "toy", "car", "sweden", "design"]
           },
           "categories": {
             "en-US": [
@@ -632,9 +620,7 @@
             "en-US": "normann@normann-copenhagen.com"
           },
           "phone": {
-            "en-US": [
-              "+45 35 55 44 59"
-            ]
+            "en-US": ["+45 35 55 44 59"]
           }
         }
       },
@@ -733,11 +719,7 @@
             ]
           },
           "tags": {
-            "en-US": [
-              "vase",
-              "flowers",
-              "accessories"
-            ]
+            "en-US": ["vase", "flowers", "accessories"]
           },
           "categories": {
             "en-US": [
@@ -929,9 +911,7 @@
                   "en-US": "normann@normann-copenhagen.com"
                 },
                 "phone": {
-                  "en-US": [
-                    "+45 35 55 44 59"
-                  ]
+                  "en-US": ["+45 35 55 44 59"]
                 }
               }
             }
@@ -1240,9 +1220,7 @@
                   "en-US": "normann@normann-copenhagen.com"
                 },
                 "phone": {
-                  "en-US": [
-                    "+45 35 55 44 59"
-                  ]
+                  "en-US": ["+45 35 55 44 59"]
                 }
               }
             }
@@ -1548,9 +1526,7 @@
                   "en-US": "info@acgears.com"
                 },
                 "phone": {
-                  "en-US": [
-                    "+1 212 260 2269"
-                  ]
+                  "en-US": ["+1 212 260 2269"]
                 }
               }
             }
@@ -1658,9 +1634,7 @@
             "en-US": "info@acgears.com"
           },
           "phone": {
-            "en-US": [
-              "+1 212 260 2269"
-            ]
+            "en-US": []
           }
         }
       },
@@ -1839,6 +1813,149 @@
           "categoryDescription": {
             "de": "Spielzeugladen, Spiele, Lernhilfen",
             "en-US": "Shop for toys, games, educational aids"
+          }
+        }
+      },
+      {
+        "sys": {
+          "space": {
+            "sys": {
+              "type": "Link",
+              "linkType": "Space",
+              "id": "rocybtov1ozk"
+            }
+          },
+          "id": "c5U1Lm7y197ZCNUI9USWPUV",
+          "type": "Entry",
+          "createdAt": "2019-09-09T06:54:07.673Z",
+          "updatedAt": "2019-09-09T06:58:04.316Z",
+          "environment": {
+            "sys": {
+              "id": "master",
+              "type": "Link",
+              "linkType": "Environment"
+            }
+          },
+          "publishedVersion": 11,
+          "publishedAt": "2019-09-09T06:58:04.316Z",
+          "firstPublishedAt": "2019-09-09T06:54:28.959Z",
+          "createdBy": {
+            "sys": {
+              "type": "Link",
+              "linkType": "User",
+              "id": "2cRG5PXyp1roAoTOywZTW6"
+            }
+          },
+          "updatedBy": {
+            "sys": {
+              "type": "Link",
+              "linkType": "User",
+              "id": "2cRG5PXyp1roAoTOywZTW6"
+            }
+          },
+          "publishedCounter": 3,
+          "version": 12,
+          "publishedBy": {
+            "sys": {
+              "type": "Link",
+              "linkType": "User",
+              "id": "2cRG5PXyp1roAoTOywZTW6"
+            }
+          },
+          "contentType": {
+            "sys": {
+              "type": "Link",
+              "linkType": "ContentType",
+              "id": "blogPost"
+            }
+          },
+          "contentful_id": "5U1Lm7y197ZCNUI9USWPUV"
+        },
+        "fields": {
+          "title": {
+            "en-US": "Post one"
+          },
+          "slug": {
+            "en-US": "post-one"
+          },
+          "author": {
+            "en-US": {
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "qYfB1lzHTNpofY3Oqvjpk"
+              }
+            }
+          }
+        }
+      },
+      {
+        "sys": {
+          "space": {
+            "sys": {
+              "type": "Link",
+              "linkType": "Space",
+              "id": "rocybtov1ozk"
+            }
+          },
+          "id": "qYfB1lzHTNpofY3Oqvjpk",
+          "type": "Entry",
+          "createdAt": "2019-09-09T06:54:16.287Z",
+          "updatedAt": "2019-09-09T06:54:38.816Z",
+          "environment": {
+            "sys": {
+              "id": "master",
+              "type": "Link",
+              "linkType": "Environment"
+            }
+          },
+          "publishedVersion": 6,
+          "publishedAt": "2019-09-09T06:54:38.816Z",
+          "firstPublishedAt": "2019-09-09T06:54:22.644Z",
+          "createdBy": {
+            "sys": {
+              "type": "Link",
+              "linkType": "User",
+              "id": "2cRG5PXyp1roAoTOywZTW6"
+            }
+          },
+          "updatedBy": {
+            "sys": {
+              "type": "Link",
+              "linkType": "User",
+              "id": "2cRG5PXyp1roAoTOywZTW6"
+            }
+          },
+          "publishedCounter": 2,
+          "version": 7,
+          "publishedBy": {
+            "sys": {
+              "type": "Link",
+              "linkType": "User",
+              "id": "2cRG5PXyp1roAoTOywZTW6"
+            }
+          },
+          "contentType": {
+            "sys": {
+              "type": "Link",
+              "linkType": "ContentType",
+              "id": "author"
+            }
+          },
+          "contentful_id": "qYfB1lzHTNpofY3Oqvjpk"
+        },
+        "fields": {
+          "name": {
+            "en-US": "Fred"
+          },
+          "favouritePost": {
+            "en-US": {
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "c5U1Lm7y197ZCNUI9USWPUV"
+              }
+            }
           }
         }
       }
@@ -2612,9 +2729,7 @@
             "type": "Link",
             "validations": [
               {
-                "linkContentType": [
-                  "6XwpTaSiiI2Ak2Ww0oi6qa"
-                ]
+                "linkContentType": ["6XwpTaSiiI2Ak2Ww0oi6qa"]
               }
             ],
             "linkType": "Entry"
@@ -2834,6 +2949,172 @@
           "omitted": false
         }
       ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "rocybtov1ozk"
+          }
+        },
+        "id": "blogPost",
+        "type": "ContentType",
+        "createdAt": "2019-09-05T20:44:05.442Z",
+        "updatedAt": "2019-09-09T06:53:15.783Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 12,
+        "publishedAt": "2019-09-09T06:53:15.783Z",
+        "firstPublishedAt": "2019-09-05T20:44:49.375Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2cRG5PXyp1roAoTOywZTW6"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2cRG5PXyp1roAoTOywZTW6"
+          }
+        },
+        "publishedCounter": 6,
+        "version": 13,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2cRG5PXyp1roAoTOywZTW6"
+          }
+        }
+      },
+      "displayField": "title",
+      "name": "Blog Post",
+      "description": "",
+      "fields": [
+        {
+          "id": "title",
+          "name": "Title",
+          "type": "Symbol",
+          "localized": false,
+          "required": true,
+          "validations": [],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "slug",
+          "name": "Slug",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "author",
+          "name": "Author",
+          "type": "Link",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "linkContentType": ["author"]
+            }
+          ],
+          "disabled": false,
+          "omitted": false,
+          "linkType": "Entry"
+        }
+      ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "rocybtov1ozk"
+          }
+        },
+        "id": "author",
+        "type": "ContentType",
+        "createdAt": "2019-09-09T06:52:36.276Z",
+        "updatedAt": "2019-09-09T06:52:53.557Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 2,
+        "publishedAt": "2019-09-09T06:52:53.557Z",
+        "firstPublishedAt": "2019-09-09T06:52:53.557Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2cRG5PXyp1roAoTOywZTW6"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2cRG5PXyp1roAoTOywZTW6"
+          }
+        },
+        "publishedCounter": 1,
+        "version": 3,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "2cRG5PXyp1roAoTOywZTW6"
+          }
+        }
+      },
+      "displayField": "name",
+      "name": "Author",
+      "description": "",
+      "fields": [
+        {
+          "id": "name",
+          "name": "Name",
+          "type": "Symbol",
+          "localized": false,
+          "required": true,
+          "validations": [],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "favouritePost",
+          "name": "favouritePost",
+          "type": "Link",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "linkContentType": ["blogPost"]
+            }
+          ],
+          "disabled": false,
+          "omitted": false,
+          "linkType": "Entry"
+        }
+      ]
     }
   ],
   "defaultLocale": "en-US",
@@ -2860,5 +3141,9 @@
         "version": 0
       }
     }
-  ]
+  ],
+  "space": {
+    "sys": { "type": "Space", "id": "x2t9il8x6p" },
+    "name": "space-name"
+  }
 }
